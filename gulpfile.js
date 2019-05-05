@@ -25,4 +25,4 @@ fs.readdirSync('./gulpfiles')
  *  Default task clean temporaries directories and launch the
  *  main optimization build task
  */
-gulp.task('default', gulp.parallel('serve', 'watch'));
+gulp.task('default', gulp.series('build', 'serve'));

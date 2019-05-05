@@ -9,11 +9,6 @@ function reloadBrowserSync(cb) {
 }
 
 gulp.task('watch', () => {
-  gulp.watch([conf.paths.src], reloadBrowserSync);
-  gulp.watch('../src/*.js', reloadBrowserSync);
-
-  //   gulp.watch(
-  //     conf.path.src('app/**/*.html'),
-  //     gulp.series('partials', reloadBrowserSync)
-  //   );
+  // gulp.watch([conf.paths.src], reloadBrowserSync);
+  // gulp.watch('../src/*.js', reloadBrowserSync);
 });
