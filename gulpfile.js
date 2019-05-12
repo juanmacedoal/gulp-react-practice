@@ -5,10 +5,10 @@
  */
 
 'use strict';
-'use strict';
-
 var fs = require('fs');
 var gulp = require('gulp');
+var packages = require('./package.json');
+var run =  require('gulp-run');
 
 /**
  *  This will load all js or coffee files in the gulp directory
@@ -21,8 +21,29 @@ fs.readdirSync('./gulpfiles')
   .map(function(file) {
     require('./gulpfiles/' + file);
   });
+
 /**
- *  Default task clean temporaries directories and launch the
- *  main optimization build task
+ * Compiling resources and serving application
  */
-gulp.task('default', gulp.series('build', 'serve'));
+
+/**
+ * Running Bower
+ */
+gulp.task('bower', function() {
+  run('bower install').exec();
+})
+.task('serve', ['bower', 'clean', 'lint', 'less', 'js', 'server'], function() {
+  return gulp.watch([
+    packages.paths.js, packages.paths.jsx, packages.paths.html, packages.paths.less
+  ], [
+   'lint', 'less', 'js', browserSync.reload
+  ]);
+})
+.task('serve:minified', ['bower', 'clean', 'lint', 'less:min', 'js:min', 'server'], function() {
+  return gulp.watch([
+    packages.paths.js, packages.paths.jsx, packages.paths.html, packages.paths.less
+  ], [
+   'lint', 'less:min', 'js:min', browserSync.reload
+  ]);
+});
+
